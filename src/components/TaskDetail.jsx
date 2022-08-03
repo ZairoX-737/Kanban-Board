@@ -28,7 +28,7 @@ const TaskDetail = props => {
                 return task.id !== taskID;
             });
             setTasks(updatedTasks)
-            navigate('/')
+            navigate('/Kanban-Board')
         }
     }
 
@@ -63,7 +63,7 @@ const TaskDetail = props => {
                     <h2 className='Detail-title'>{Mytask.title}</h2>
                     <div className='Detail-header-info'>
                         <div className='status status-pc' style={{background: LIST_COLORS[Mytask.status]}}>{LIST_COPY[Mytask.status]}</div>
-                        <Link to='/' className='close-detail-btn'></Link>
+                        <Link to='/Kanban-Board' className='close-detail-btn'></Link>
                     </div>
                 </div>
                 <p className='createdAt'>{formatDate(Mytask.created)}</p>
@@ -106,7 +106,7 @@ const TaskDetail = props => {
             <>
                 <div className='Detail-header'>
                     <h2>Task with ID {taskID} not found</h2>
-                    <Link to='/' className='close-detail-btn'></Link>
+                    <Link to='/Kanban-Board' className='close-detail-btn'></Link>
                 </div>
             </>
         )}
