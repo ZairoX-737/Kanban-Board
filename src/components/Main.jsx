@@ -9,10 +9,10 @@ const Main = props => {
     return (
         <main className='kanban-main'>
             <Routes>
-                <Route exact path ={'/Kanban-Board'} element={<Board {...props}/>}>
+                <Route exact path ={'/Kanban-Board'} element={<Board {...props} key='board'/>}>
                 </Route>
 
-                <Route path ={'/tasks/:taskID'} element={<TaskDetail {...props} />}>
+                <Route path ={'/tasks/:taskID'} element={<TaskDetail {...props} key='detail' />}>
                 </Route>
             </Routes>
 

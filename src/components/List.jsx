@@ -1,6 +1,6 @@
 import React from 'react'
 import '..//App.css'
-import { LIST_COLORS, LIST_TYPES } from '../config'
+import { LIST_TYPES } from '../config'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import FormAddNewTask from './FormAddNewTask'
@@ -9,14 +9,18 @@ import FormAddNewTask from './FormAddNewTask'
 const Board = props => {
     const {title, type, tasks, allTasks, setTasks, selectTasks, addNewTask} = props
     const [isFormVisible, setFormVisible] = useState(false)
+    const [isButtonVisible, setButtonVisible] = useState(true)
+    const [isSelectButtonVisible, setSelectButtonVisible] = useState(true)
     const [isSelectVisible, setSelectVisible] = useState(false)
     
     const handleClickBacklog = () => {
         setFormVisible(!isFormVisible)
+        setButtonVisible(!isButtonVisible)
     }
 
     const handleClickSelect = () => {
         setSelectVisible(!isSelectVisible)
+        setSelectButtonVisible(!isSelectButtonVisible)
     }
 
     const selectHandleChange = (e) => {
@@ -29,6 +33,7 @@ const Board = props => {
         })
         setTasks(updatedTasks)
         setSelectVisible(!isSelectVisible)
+        setSelectButtonVisible(!isSelectButtonVisible)
     }
 
     return (
@@ -40,31 +45,32 @@ const Board = props => {
                         <div 
                             key={task.id} 
                             className='kanban-item' 
-                            addNewTask={addNewTask}
-                            style={ {background: LIST_COLORS[type], border: `7px solid ${LIST_COLORS[type]}` }}
                         > 
                             {task.title}  
                         </div>
                     </Link>
                 )
             })}
-            {type === LIST_TYPES.BACKLOG && (
-                <button className='kanban-add' onClick={handleClickBacklog}>+ Add card</button>
-            )}
             {type === LIST_TYPES.BACKLOG && isFormVisible && (
-                <FormAddNewTask addNewTask={addNewTask} setFormVisible={setFormVisible} />
+                <FormAddNewTask addNewTask={addNewTask} setFormVisible={setFormVisible} setButtonVisible={setButtonVisible} />
             )}
+            {type === LIST_TYPES.BACKLOG && isButtonVisible && (
+                <button className='kanban-add' onClick={handleClickBacklog}>+ Add card</button>
+            )}          
             {type !== LIST_TYPES.BACKLOG && (
                 <>
-                    {selectTasks.length === 0 
-                        ? <button className='kanban-add kanban-add-disabled' onClick={handleClickSelect} disabled='disabled'>No tasks to add</button>
-                        : <button className='kanban-add' onClick={handleClickSelect} >+ Add card</button>
-                    }
+                    {selectTasks.length === 0 && (
+                        <button className='kanban-add kanban-add-disabled' disabled='disabled'>No tasks to add</button>
+                    )}
+                    {selectTasks.length !== 0 && isSelectButtonVisible && (
+                        <button className='kanban-add' onClick={handleClickSelect} >+ Add card</button>
+                    )}
                     {selectTasks.length > 0 && isSelectVisible && (
-                        <select className='kanban-select' >
+                        <select className='kanban-select' onChange={selectHandleChange} >
+                            <option selected> Select task </option>
                             {selectTasks.map(task => {
                                 return(
-                                    <option onClick={selectHandleChange}>{task.title}</option> 
+                                        <option value={task.title}>{task.title}</option> 
                                 )
                             })}
 

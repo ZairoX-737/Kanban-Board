@@ -13,7 +13,6 @@ const Board = props => {
             id: uniqid(),
             title: title,
             description: description,
-            created: new Date().toISOString(),
             status: LIST_TYPES.BACKLOG,
         }
         setTasks([...tasks, newTask])
@@ -39,7 +38,16 @@ const Board = props => {
                     }
                 })
                 return(
-                    <List key={type} title={LIST_COPY[type]} type={type} allTasks={tasks} tasks={listTasks} setTasks={setTasks} selectTasks={selectTasks} addNewTask={addNewTask} />
+                    <List 
+                        key={type} 
+                        title={LIST_COPY[type]} 
+                        type={type} 
+                        allTasks={tasks} 
+                        tasks={listTasks} 
+                        setTasks={setTasks} 
+                        selectTasks={selectTasks} 
+                        addNewTask={addNewTask} 
+                    />
                 )
             })}
         </div>

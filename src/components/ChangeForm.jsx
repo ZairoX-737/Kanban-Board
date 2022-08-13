@@ -21,7 +21,7 @@ const ChangeForm = props => {
     };
 
 	return (
-		<form  className='form' spellCheck='false' onSubmit={handleSubmit}>
+		<form  className='form changeForm' spellCheck='false' onSubmit={handleSubmit}>
 			<textarea 
                 className='kanban-input change-input kanban-textarea' 
                 id='taskTitle' 
